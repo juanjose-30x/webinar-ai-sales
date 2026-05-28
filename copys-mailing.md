@@ -2,7 +2,7 @@
 
 Cuatro copys segmentados para mandar la grabación del webinar + CTA al curso en las 72h posteriores.
 
-**Tono:** Dylan Pereira / Growth Rockstar — directo, conversacional, sin marketingese, sin emojis, sin promesas vacías.
+**Tono:** Dylan Pereira / 30X — directo, conversacional, sin marketingese, sin emojis, sin promesas vacías.
 
 **Datos duros para usar en todos los copys (no inventar):**
 - USD 1.950 · 4 semanas · 8 módulos en vivo · 100% online
