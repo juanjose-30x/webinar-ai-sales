@@ -1,0 +1,10 @@
+{
+  "name": "webinar-ai-sales-dashboard",
+  "version": "1.0.0",
+  "description": "Dashboard de leads del webinar 30X AI Sales con proxy a Claude API",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev"
+  }
+}
