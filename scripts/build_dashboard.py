@@ -25,6 +25,10 @@ OUT_PATH = ROOT / "index.html"
 PROXY_URL = "https://webinar-ai-sales.vercel.app/api/claude"
 CALENDLY_URL = "https://calendly.com/d/cxpx-kmb-ccy/30x-sales-ai-sales-admisiones"
 CURSO_URL = "https://30x.com/programas/ai-sales"
+CHECKOUT_URL = "https://checkout.oracle30x.co/checkout/aisales-discount"
+PRICE_FULL = 1950
+PRICE_PROMO = 1750
+CUPOS_PROMO = 15
 
 # Keywords para categorizar preguntas
 CATS = [
@@ -70,7 +74,7 @@ CATS = [
 # Respuestas oficiales por categoría (basadas en CLAUDE.md)
 ANSWERS = {
     "TOOLS": "Trabajás directo sobre el stack: **Dapta** (infraestructura de IA), **n8n** (orquestación), **GPTs custom**, agentes de voz, e integraciones con tu CRM (HubSpot, Salesforce, Pipedrive). Vienen **+100K créditos de Dapta gratis** y todos los templates de n8n listos para copiar/pegar. No tenés que armar el stack desde cero — lo aplicás sobre tu pipeline desde la primera semana.",
-    "PRICING": "**USD 1.950** por el programa completo. Reserva de cupo: **USD 199** (se descuenta del total). Aceptamos tarjeta de crédito y transferencia bancaria; si necesitás otra opción, lo coordinamos con admisiones. Por la cantidad de templates, los +100K créditos de Dapta y la mentoría en vivo con Nicolás Rojas y Andrés Bilbao, el ROI se mide en deals cerrados las primeras semanas, no en costo recuperado.",
+    "PRICING": "Precio regular: **USD 1.950**. **Promo activa para asistentes al webinar: USD 1.750** (USD 200 off, cupos limitados a 15 personas). Aceptamos tarjeta de crédito y transferencia bancaria; si necesitás otra opción, lo coordinamos con admisiones. Por la cantidad de templates, los +100K créditos de Dapta y la mentoría en vivo con Nicolás Rojas y Andrés Bilbao, el ROI se mide en deals cerrados las primeras semanas, no en costo recuperado. **Reservar con descuento → checkout.oracle30x.co/checkout/aisales-discount**",
     "FIT": "Está pensado para **líderes comerciales no técnicos**: heads of sales, directores comerciales, founders que venden, account executives, SDR/BDR leads y revenue leaders. No necesitás saber programar — el stack que aprendés (Dapta, n8n, GPTs) no requiere developers. Si liderás un equipo de ventas, prospectás o cerrás, te calza. Trabajamos sobre TU pipeline real, no sobre casos hipotéticos.",
     "OUTCOME": "La métrica concreta del programa es **20x productividad en 4 semanas**. En operativa real: equipos que reducen el research por cuenta de 2h a 10 min, founders que duplican respuesta a leads inbound, AEs que mandan 5x los follow-ups que mandaban antes. El impacto exacto depende de qué vendés y tu ciclo de venta, pero todos salen con: sistema de outbound asistido funcionando, agentes de inbound corriendo y forecasting predictivo armado.",
     "SCHEDULE": "La próxima cohorte arranca pronto — cupos limitados a **100 personas** por cohorte, programa de **4 semanas**, **8 sesiones en vivo** (más material grabado por 1 año). Para fecha confirmada y reservar lugar, agendá 15 min con admisiones: [link Calendly]",
@@ -252,6 +256,15 @@ body::after {
 .topbar-right { display: flex; gap: 16px; color: var(--text-dim); flex-wrap: wrap; }
 .topbar-right span { padding: 4px 10px; border: 1px solid var(--border); border-radius: 3px; }
 .topbar-right span.highlight { color: var(--accent); border-color: var(--accent-dim); }
+.promo-pill {
+  background: var(--accent); color: var(--bg);
+  padding: 4px 10px; border-radius: 3px;
+  text-decoration: none; font-weight: 700;
+  font-family: var(--mono); letter-spacing: 0.08em;
+  border: 1px solid var(--accent);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.promo-pill:hover { transform: translateY(-1px); box-shadow: 0 0 14px var(--accent-glow); background: var(--text); }
 
 .hero {
   position: relative; z-index: 1;
@@ -703,6 +716,7 @@ body::after {
     <span id="clock">--:--:--</span>
     <span>n = __TOTAL__ leads</span>
     <span class="highlight">hot = __HOT__</span>
+    <a href="__CHECKOUT_URL__" target="_blank" class="promo-pill">PROMO · USD 1.750 · __CUPOS_PROMO__ CUPOS →</a>
   </div>
 </div>
 
@@ -849,9 +863,11 @@ body::after {
       </div>
     </div>
     <div>
-      <h4>Próxima cohorte</h4>
-      <p style="color: var(--accent); font-family: var(--mono); font-size: 12px;">CUPOS LIMITADOS · 100 PERSONAS.</p>
-      <p style="margin-top: 12px;">USD 1.950 · reserva USD 199 · 4 semanas · 8 sesiones en vivo. Mentores: <strong style="color: var(--accent);">Nicolás Rojas (Dapta) + Andrés Bilbao (Rappi)</strong>. <a href="__CURSO_URL__" target="_blank" style="color: var(--accent); text-decoration: underline;">Aplicar al programa →</a></p>
+      <h4>Promo asistentes al webinar</h4>
+      <p style="color: var(--accent); font-family: var(--mono); font-size: 12px;">USD 200 OFF · SOLO __CUPOS_PROMO__ CUPOS.</p>
+      <p style="margin-top: 12px;">Precio regular USD 1.950 → <strong style="color: var(--accent);">USD 1.750 por inscribirte hoy</strong>. 4 semanas, 8 sesiones en vivo con Nicolás Rojas (Dapta) y Andrés Bilbao (Rappi).</p>
+      <p style="margin-top: 16px;"><a href="__CHECKOUT_URL__" target="_blank" style="display: inline-block; background: var(--accent); color: var(--bg); padding: 12px 18px; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none;">Reservar con descuento →</a></p>
+      <p style="margin-top: 10px; font-size: 10px;"><a href="__CURSO_URL__" target="_blank" style="color: var(--text-dim); text-decoration: underline;">o ver página del programa</a></p>
     </div>
   </div>
 </div>
@@ -861,6 +877,7 @@ body::after {
 const PROXY_URL = "__PROXY_URL__";
 const CALENDLY_URL = "__CALENDLY_URL__";
 const CURSO_URL = "__CURSO_URL__";
+const CHECKOUT_URL = "__CHECKOUT_URL__";
 
 // ============ DATA ============
 __LEADS_JSON__
@@ -1076,6 +1093,7 @@ function openModal(idx) {
       <a class="btn" href="mailto:${escapeHtml(l.e)}?subject=${mailtoSubject}&body=${mailtoBody}" target="_blank">Abrir en Gmail</a>
       ${waNumber ? `<a class="btn" href="https://wa.me/${waNumber}?text=${waMessage}" target="_blank">Abrir en WhatsApp</a>` : ''}
       <a class="btn" href="${CALENDLY_URL}" target="_blank">Agendar llamada</a>
+      <a class="btn primary" href="${CHECKOUT_URL}" target="_blank">Reservar USD 1.750 →</a>
     </div>
 
     <div class="modal-section" style="margin-top: 32px;">
@@ -1137,15 +1155,16 @@ Contexto del programa 30X AI Sales (usalo como verdad, no inventes datos):
 - Mentores: Nicolás Rojas (CEO Dapta, Forbes 30u30) y Andrés Bilbao (co-founder Rappi).
 - 8 módulos: 1) AI Mindset & Stack del Top Performer, 2) Social Selling, 3) Outbound Inteligencia de Cuentas, 4) Outbound Hiper-Personalización a Escala, 5) Inbound Conversational AI & Speed-to-Lead, 6) Inbound Discovery & Follow-Up, 7) Sales Coaching con Conversational Intelligence, 8) RevOps Forecasting & Agentes Autónomos.
 - Stack mencionado: n8n, Dapta, GPTs, agentes de voz, integraciones con CRM.
-- Precio USD 1.950. Reserva cupo USD 199. Limitado a 100 cupos. +100K créditos Dapta gratis. Certificado oficial 30X Executive Education.
+- Precio regular USD 1.950. **Promo activa para asistentes al webinar: USD 1.750 (USD 200 off), solo 15 cupos a este precio.** Reserva de cupo: USD 199. Cupos totales de la cohorte limitados a 100. +100K créditos Dapta gratis. Certificado oficial 30X Executive Education.
 - URL del programa: ${CURSO_URL}
+- Link de checkout con descuento USD 1.750: ${CHECKOUT_URL}
 
 La propuesta debe:
 1. Saludo personal por nombre (solo primer nombre).
 2. Referencia específica a su pregunta o contexto de su rol/empresa.
 3. Conectar con el módulo concreto del programa que resuelve eso.
 4. Mencionar que se trabaja sobre el pipeline real del lead, no demos genéricas.
-5. Call to action: agendar llamada (${CALENDLY_URL}) o reservar cupo (USD 199 vía ${CURSO_URL}).
+5. Call to action: **Reservar con el descuento USD 1.750 vía ${CHECKOUT_URL}** (mencionar que quedan 15 cupos a ese precio) o agendar llamada (${CALENDLY_URL}) si necesita despejar dudas antes.
 
 Máximo 200 palabras. Tono Dylan Pereira / 30X: directo, cercano, sin marketingese, sin emojis, sin promesas vacías.`;
 
@@ -1211,6 +1230,8 @@ def main():
         "__PROXY_URL__": PROXY_URL,
         "__CALENDLY_URL__": CALENDLY_URL,
         "__CURSO_URL__": CURSO_URL,
+        "__CHECKOUT_URL__": CHECKOUT_URL,
+        "__CUPOS_PROMO__": str(CUPOS_PROMO),
         "__LEADS_JSON__": leads_json,
         "__FAQS_JSON__": faqs_json,
         "__DECISION_KW__": dm_json,
