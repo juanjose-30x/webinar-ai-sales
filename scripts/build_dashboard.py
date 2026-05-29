@@ -634,6 +634,22 @@ body::after {
   content: 'Seleccioná un lead arriba (click en "Generar propuesta nueva en vivo" dentro del modal) — Claude escribe la propuesta custom con datos reales del programa.';
   color: var(--text-faint); font-style: italic;
 }
+.proposal-body {
+  white-space: pre-wrap; line-height: 1.7;
+  font-family: var(--sans); font-size: 14px;
+  color: var(--text); margin-bottom: 20px;
+}
+.live-actions {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  padding-top: 18px; border-top: 1px dashed var(--accent-dim);
+  margin-top: 12px;
+}
+.btn.big {
+  font-size: 13px; padding: 14px 22px; letter-spacing: 0.1em;
+}
+.live-actions .btn.primary.big {
+  box-shadow: 0 0 18px var(--accent-glow);
+}
 
 .notes-area {
   width: 100%; background: var(--bg); border: 1px solid var(--border);
@@ -1130,6 +1146,30 @@ function copyText(t) {
 }
 
 // ============ GENERATE PROPOSAL (proxy) ============
+let lastProposal = "";
+
+function renderLiveActions(idx, text) {
+  const l = LEADS[idx];
+  const subject = encodeURIComponent(`${l.n.split(" ")[0]}, lo que hablamos del programa 30X AI Sales`);
+  const body = encodeURIComponent(text);
+  const waNumber = (l.t || "").replace(/[^\d]/g, "");
+  const waText = encodeURIComponent(text);
+  return `
+    <div class="live-actions">
+      <a class="btn primary big" href="mailto:${escapeHtml(l.e)}?subject=${subject}&body=${body}" target="_blank">
+        ✉ Enviar esta propuesta por mail
+      </a>
+      ${waNumber ? `
+        <a class="btn primary big" style="background: #25d366; border-color: #25d366; color: #fff;"
+           href="https://wa.me/${waNumber}?text=${waText}" target="_blank">
+          ▶ Enviar esta propuesta por WhatsApp
+        </a>` : `
+        <span class="btn big" style="opacity: 0.4; cursor: not-allowed;">— sin teléfono en CSV —</span>`}
+      <button class="btn big" onclick="copyText(lastProposal)">Copiar propuesta</button>
+    </div>
+  `;
+}
+
 async function generateProposal(idx) {
   const l = LEADS[idx];
   const btn = document.getElementById("btn-generate");
@@ -1138,7 +1178,7 @@ async function generateProposal(idx) {
 
   btn.disabled = true;
   btn.textContent = "Generando...";
-  out.textContent = "» llamando a Claude...";
+  out.innerHTML = '<div style="color: var(--accent); font-family: var(--mono);">» llamando a Claude...</div>';
   if (outBottom) outBottom.textContent = "» llamando a Claude...";
 
   const prompt = `Sos parte del equipo de 30X. Escribime una propuesta personalizada para este lead que se registró al webinar "30X AI Sales: Cómo Clonar a tu Mejor Vendedor con AI".
@@ -1178,8 +1218,9 @@ Máximo 200 palabras. Tono Dylan Pereira / 30X: directo, cercano, sin marketinge
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     const txt = data.text || data.content?.[0]?.text || JSON.stringify(data);
-    out.textContent = txt;
-    if (outBottom) outBottom.textContent = txt;
+    lastProposal = txt;
+    out.innerHTML = `<div class="proposal-body">${escapeHtml(txt)}</div>` + renderLiveActions(idx, txt);
+    if (outBottom) outBottom.innerHTML = `<div class="proposal-body">${escapeHtml(txt)}</div>` + renderLiveActions(idx, txt);
   } catch (err) {
     out.innerHTML = `<span style="color: var(--red)">⚠ Error: ${escapeHtml(err.message)}</span>\n\nUsá la respuesta pre-generada arriba como plan B.`;
     if (outBottom) outBottom.innerHTML = out.innerHTML;
